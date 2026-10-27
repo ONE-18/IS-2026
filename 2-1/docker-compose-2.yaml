@@ -1,0 +1,13 @@
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "81:81"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+      - ./html2:/usr/share/nginx/html2:ro
+      - ./sitios_nginx:/etc/nginx/conf.d:ro
+    restart: unless-stopped

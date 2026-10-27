@@ -1,0 +1,16 @@
+
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    networks:
+      - pruebas
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+      - ./sitios_nginx:/etc/nginx/conf.d
+
+networks:
+  pruebas:
+    external: true
