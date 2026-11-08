@@ -1,0 +1,18 @@
+services:
+  basedatos:
+    image: mariadb
+    container_name: basedatos
+    environment:
+      MYSQL_ROOT_PASSWORD: claveroot
+      MYSQL_USER: amigosuser
+      MYSQL_DATABASE: amigosdb
+      MYSQL_PASSWORD: amigospass
+    volumes:
+      - ./basedatos:/var/lib/mysql
+    networks:
+      - pruebas
+    restart: "no"
+
+networks:
+  pruebas:
+    driver: bridge
