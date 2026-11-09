@@ -1,0 +1,46 @@
+services:
+  basedatos:
+    image: mariadb
+    container_name: basedatos
+    environment:
+      MYSQL_ROOT_PASSWORD: claveroot
+      MYSQL_USER: amigosuser
+      MYSQL_DATABASE: amigosdb
+      MYSQL_PASSWORD: amigospass
+    volumes:
+      - ./basedatos:/var/lib/mysql
+    networks:
+      - pruebas
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  amigos:
+    image: amigos:1.0
+    container_name: amigos
+    environment:
+      DEPLOYMENT_MODE: production
+      DATABASE_URI: mysql+pymysql://amigosuser:amigospass@basedatos/amigosdb
+    depends_on:
+      basedatos:
+        condition: service_healthy
+    networks:
+      - pruebas
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    volumes:
+      - ./amigos/sitios_nginx:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+    depends_on:
+      - amigos
+    networks:
+      - pruebas
+
+networks:
+  pruebas:
+    driver: bridge
