@@ -20,7 +20,7 @@ services:
   amigos:
     build:
       context: ./amigos
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile1w
     container_name: amigos
     environment:
       DEPLOYMENT_MODE: production
