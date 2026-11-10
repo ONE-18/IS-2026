@@ -28,5 +28,8 @@ def create_app(config_name):
 
     from .metrics import metrics as metrics_blueprint
     app.register_blueprint(metrics_blueprint)
+    
+    from .saludo import saludo as saludo_blueprint
+    app.register_blueprint(saludo_blueprint, url_prefix="/saludo")
 
     return app
