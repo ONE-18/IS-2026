@@ -18,7 +18,9 @@ services:
       retries: 10
 
   amigos:
-    image: amigos:1.0
+    build:
+      context: ./amigos
+      dockerfile: Dockerfile
     container_name: amigos
     environment:
       DEPLOYMENT_MODE: production
